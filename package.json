@@ -1,0 +1,53 @@
+{
+    "name": "jtp.es",
+    "version": "1.0.0",
+    "description": "The code of my personal web page",
+    "author": "Julio Treviño Páez <julio.tpaez@gmail.com>",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt-ts",
+        "build": "nuxt-ts build",
+        "generate": "nuxt-ts generate",
+        "start": "nuxt-ts start",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@nuxt/typescript-runtime": "^0.3.8",
+        "@nuxtjs/axios": "^5.9.3",
+        "@nuxtjs/dotenv": "^1.4.1",
+        "@nuxtjs/pwa": "^3.0.0-beta.19",
+        "@types/consola": "^2.2.5",
+        "@types/koa": "^2.11.0",
+        "@types/uuid": "^3.4.6",
+        "cross-env": "^6.0.3",
+        "koa": "^2.11.0",
+        "nuxt": "^2.11.0",
+        "nuxt-i18n": "^6.4.1",
+        "uuid": "^3.3.3",
+        "vue-property-decorator": "^8.3.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.2",
+        "@vue/test-utils": "^1.0.0-beta.30",
+        "babel-jest": "^24.9.0",
+        "jest": "^24.9.0",
+        "vue-jest": "^4.0.0-beta.2",
+        "@nuxt/typescript-build": "^0.5.6"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/juliotpaez/jtp.es.git"
+    },
+    "keywords": [
+        "web",
+        "personal",
+        "vue",
+        "nuxt",
+        "typescript"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/juliotpaez/jtp.es/issues"
+    },
+    "homepage": "https://github.com/juliotpaez/jtp.es#readme"
+}
