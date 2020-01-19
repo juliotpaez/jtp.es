@@ -1,0 +1,14 @@
+version: "3.6"
+
+services:
+    jtp-web:
+        image: "node:10"
+        restart: always
+        working_dir: /home/node/app
+        environment:
+            - NODE_ENV=production
+        volumes:
+            - ./web/:/home/node/app
+        ports:
+            - "3000:3000"
+        command: "npm run start"
