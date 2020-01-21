@@ -102,21 +102,48 @@
                       left-icon="fab facebook"
                       theme="link"/>
         </div>
+
+        <div class="buttons">
+            <j-switch :rounded="true" false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
+            <j-switch false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
+            <j-switch :inset-thumb="true" false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
+            <j-switch :inset-thumb="true"
+                      :rounded="true"
+                      false-icon="chevron-left"
+                      true-icon="chevron-right"
+                      v-model="checked"/>
+            <j-switch :material="true" false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
+            <j-switch :material="true"
+                      :rounded="true"
+                      false-icon="chevron-left"
+                      true-icon="chevron-right"
+                      v-model="checked"/>
+            <j-switch :tricolor="true"
+                      accent-color="white"
+                      false-color="j-orange"
+                      false-icon="chevron-left"
+                      true-color="j-green"
+                      true-icon="chevron-right"
+                      v-model="checked"/>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
     import JButton from "~/components/ui/JButton.vue";
+    import JSwitch from "~/components/ui/JSwitch.vue";
 
     @Component({
         components: {
+            JSwitch,
             JButton
         }
     })
     export default class DefaultLayout extends Vue {
         maximized = false;
         minimized = false;
+        checked = false;
 
         // GETTERS & SETTERS --------------------------------------------------
 
