@@ -1,8 +1,7 @@
 html {
     box-sizing: border-box;
-    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 16px;
+    font-family: Roboto, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -ms-text-size-adjust: 100%;
@@ -11,15 +10,6 @@ html {
 }
 
 html, body {
-    background: linear-gradient(to bottom, rgba(243, 200, 91, 1) 0%, rgba(225, 157, 55, 1) 100%);
-    --debug-bg-color: #00c443;
-    --error-bg-color: #ed655a;
-    --warn-bg-color: #e1c04c;
-    --accent-color: #e19d37;
-    --bg-color: #f3c85b;
-    --debug-color: #005a11;
-    --error-color: #951f16;
-    --warn-color: #ae8d34;
     height: 100vh;
     margin: 0;
     padding: 0;

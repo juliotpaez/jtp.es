@@ -1,0 +1,80 @@
+body {
+    /* -------------- */
+    /*  Theme colors  */
+    /* -------------- */
+    --text-color: #000000;
+    --bg-color: #ffffff;
+
+    /* --------------- */
+    /*  Common colors  */
+    /* --------------- */
+    --j-green-color: #1eb980;
+    --j-dark-green-color: #045d56;
+    --j-orange-color: #ff6859;
+    --j-yellow-color: #ffcf44;
+    --j-purple-color: #b15dff;
+    --j-blue-color: #72deff;
+
+    /* ------- */
+    /*  Sizes  */
+    /* ------- */
+    --min-width: 250px;
+}
+
+.theme-dark {
+    /* -------------- */
+    /*  Theme colors  */
+    /* -------------- */
+    --j-secondary-color: #ffffff;
+    --j-primary-color: #2b2c2e;
+
+    /* ------------------- */
+    /*  Background colors  */
+    /* -------------–----- */
+    --bg-gradient-left: #35373a;
+    --bg-gradient-right: #252525;
+    --bg-gradient-top: #2b2c2e;
+}
+
+.theme-white {
+    /* -------------- */
+    /*  Theme colors  */
+    /* -------------- */
+    --j-secondary-color: #ffffff;
+    --j-primary-color: #2b2c2e;
+
+    /* ------------------- */
+    /*  Background colors  */
+    /* -------------–----- */
+    --bg-gradient-left: #d4d4d4;
+    --bg-gradient-right: #e2e1e0;
+    --bg-gradient-top: #f5f5f5;
+}
+
+.theme-color {
+    /* -------------- */
+    /*  Theme colors  */
+    /* -------------- */
+    --j-primary-color: #344955;
+    --j-complementary-color: #554034;
+    --j-secondary-color: #f9aa33;
+    --j-extra-1-color: #b5aaa4;
+    --j-extra-2-color: #f5eecc;
+    --j-extra-3-color: #7d859b;
+    --j-extra-4-color: #ac8798;
+    --j-extra-5-color: #a6be87;
+    --j-extra-6-color: #77bea1;
+
+    /**
+     * Great combinations:
+     *   any extra (2, 5) with primary and the other way around also
+     *   any extra (2, 5) with complementary and the other way around also
+     */
+
+    /* ------------------- */
+    /*  Background colors  */
+    /* -------------–----- */
+    --bg-gradient-left: linear-gradient(135deg, rgba(232, 212, 103, 1) 0%, rgba(230, 215, 141, 1) 100%);
+    --bg-gradient-right: linear-gradient(45deg, rgba(189, 149, 100, 1) 0%, rgba(190, 134, 65, 1) 100%);
+    --bg-gradient-top: linear-gradient(to bottom, rgba(243, 200, 91, 1) 0%, rgba(225, 157, 55, 1) 100%);
+}

@@ -1,23 +1,28 @@
 import { ActionTree, GetterTree, MutationTree } from "vuex";
 
 export const state = () => ({
-    things: [] as string[],
-    name: "Me"
+    theme: "color"
 });
 
 // Type
-export type RootState = ReturnType<typeof state>
+export type GlobalState = ReturnType<typeof state>
 
-export const getters: GetterTree<RootState, RootState> = {
-    name: state => state.name
+export const getters: GetterTree<GlobalState, GlobalState> = {
+    theme: state => state.theme
 };
 
-export const mutations: MutationTree<RootState> = {
-    CHANGE_NAME: (state, newName: string) => (state.name = newName)
-};
+export const mutations: MutationTree<GlobalState> = {
+    changeTheme: (state, newTheme: string) => {
+        switch (newTheme) {
+            case "color":
+            case "white":
+            case "dark":
+                state.theme = newTheme;
+                return;
+        }
 
-export const actions: ActionTree<RootState, RootState> = {
-    fetchThings({commit}) {
-        commit("CHANGE_NAME", "New name");
+        throw `The specified theme is incorrect: ${newTheme}`;
     }
 };
+
+export const actions: ActionTree<GlobalState, GlobalState> = {};
