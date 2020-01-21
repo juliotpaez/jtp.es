@@ -7,30 +7,101 @@
                 <div @click="maximize" class="dot debug"></div>
             </div>
         </div>
-        <div :key="locale" @click="setLocale(locale)" v-for="locale in availableLocales">
-            {{ locale }}
+        <div :key="locale" v-for="locale in availableLocales">
+            <j-button :text="locale" @click="setLocale(locale)"/>
         </div>
-        <div>
-            <h1 class="title">jtp.es</h1>
-            <h2 class="subtitle">{{$t("message")}}</h2>
+        <!--        <div>-->
+        <!--            <h1 class="title">jtp.es</h1>-->
+        <!--            <h2 class="subtitle">{{$t("message")}}</h2>-->
+        <!--        </div>-->
+
+        <div class="buttons">
+            <j-button text="standard" theme="standard"/>
+            <j-button :negative="true" text="standard negative" theme="standard"/>
+            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="standard"/>
+            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-green" color="j-secondary" text="" theme="standard"/>
+            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-orange" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-purple" color="j-complementary" text="" theme="standard"/>
+            <j-button bg-color="j-blue" color="j-complementary" text="" theme="standard"/>
+            <j-button :icon-mode="true"
+                      :rounded="true"
+                      bg-color="j-extra-2"
+                      color="j-complementary"
+                      left-icon="fab facebook"/>
         </div>
-        <j-button text="standard" theme="standard"/>
-        <j-button :negative="true" text="standard" theme="standard"/>
-        <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="standard"/>
-        <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="standard"/>
-
-
-        <j-button bg-color="j-green" color="j-secondary" text="" theme="standard"/>
-        <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-orange" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-yellow" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-purple" color="j-complementary" text="" theme="standard"/>
-        <j-button bg-color="j-blue" color="j-complementary" text="" theme="standard"/>
-        <j-button :icon-mode="true" bg-color="j-extra-2" color="j-complementary" left-icon="fab facebook"/>
+        <div class="buttons">
+            <j-button text="standard" theme="flat"/>
+            <j-button :negative="true" text="standard negative" theme="flat"/>
+            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="flat"/>
+            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-green" color="j-secondary" text="" theme="flat"/>
+            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-orange" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-purple" color="j-complementary" text="" theme="flat"/>
+            <j-button bg-color="j-blue" color="j-complementary" text="" theme="flat"/>
+            <j-button :icon-mode="true"
+                      :rounded="true"
+                      bg-color="j-extra-2"
+                      color="j-complementary"
+                      left-icon="fab facebook"
+                      theme="flat"/>
+        </div>
+        <div class="buttons">
+            <j-button text="standard" theme="outline"/>
+            <j-button :negative="true" text="standard negative" theme="outline"/>
+            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="outline"/>
+            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-green" color="j-secondary" text="" theme="outline"/>
+            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-orange" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-purple" color="j-complementary" text="" theme="outline"/>
+            <j-button bg-color="j-blue" color="j-complementary" text="" theme="outline"/>
+            <j-button :icon-mode="true"
+                      :rounded="true"
+                      bg-color="j-extra-2"
+                      color="j-complementary"
+                      left-icon="fab facebook"
+                      theme="outline"/>
+        </div>
+        <div class="buttons">
+            <j-button text="standard" theme="link"/>
+            <j-button :negative="true" text="standard negative" theme="link"/>
+            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="link"/>
+            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-green" color="j-secondary" text="" theme="link"/>
+            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-orange" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-purple" color="j-complementary" text="" theme="link"/>
+            <j-button bg-color="j-blue" color="j-complementary" text="" theme="link"/>
+            <j-button :icon-mode="true"
+                      :rounded="true"
+                      bg-color="j-extra-2"
+                      color="j-complementary"
+                      left-icon="fab facebook"
+                      theme="link"/>
+        </div>
     </div>
 </template>
 
@@ -146,6 +217,17 @@
             border-radius: 0;
             width: 100vw;
         }
+    }
+
+    .buttons {
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .buttons > * {
+        margin-left: 10px;
     }
 </style>
 

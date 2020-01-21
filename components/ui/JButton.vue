@@ -10,7 +10,7 @@
          class="button"
          ref="button">
         <div class="wrapper">
-            <fa-icon :icon="leftIconValue" v-if="this.leftIcon !== ''"/>
+            <fa-icon :class="{icon: iconMode}" :icon="leftIconValue" v-if="this.leftIcon !== ''"/>
             <span v-if="!iconMode">{{text}}</span>
             <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIcon !== ''"/>
         </div>
@@ -35,6 +35,7 @@
         @Prop({default: false}) iconMode!: boolean;
         @Prop({default: ""}) leftIcon!: string;
         @Prop({default: ""}) rightIcon!: string;
+        @Prop({default: null}) ripple!: boolean | null;
 
         // Behaviour
         @Prop({default: -1}) focusIndex!: number;
@@ -52,6 +53,15 @@
 
         get rightIconValue() {
             return this.rightIcon.split(/\s+/, 2) || "";
+        }
+
+        get rippleValue() {
+            if (this.ripple === null) {
+                // Avoid in link.
+                return this.theme !== "link";
+            }
+
+            return this.ripple;
         }
 
         get themeClasses() {
@@ -80,6 +90,10 @@
                 classes.push("icon");
             }
 
+            if (this.rippleValue) {
+                classes.push("ripple");
+            }
+
             return classes;
         }
 
@@ -88,11 +102,25 @@
 
             if (this.color !== "") {
                 styles["color"] = ColorUtils.themeColorToCss(this.color);
+            } else {
+                if (this.negative) {
+                    styles["color"] = ColorUtils.wrapVariable("j-primary");
+                } else {
+                    styles["color"] = ColorUtils.wrapVariable("j-secondary");
+                }
             }
 
             // Prevent in flat and link mode.
-            if (this.theme !== "flat" && this.theme !== "link" && this.bgColor !== "") {
-                styles["background-color"] = ColorUtils.themeColorToCss(this.bgColor);
+            if (this.theme !== "flat" && this.theme !== "link") {
+                if (this.bgColor !== "") {
+                    styles["background-color"] = ColorUtils.themeColorToCss(this.bgColor);
+                } else {
+                    if (this.negative) {
+                        styles["background-color"] = ColorUtils.wrapVariable("j-secondary");
+                    } else {
+                        styles["background-color"] = ColorUtils.wrapVariable("j-primary");
+                    }
+                }
             }
 
             return styles;
@@ -151,6 +179,7 @@
         min-width: 2.572em;
         overflow: hidden;
         width: fit-content;
+        outline: none;
     }
 
     .button > .wrapper {
@@ -166,7 +195,7 @@
         border-radius: 200px;
     }
 
-    .button.icon .wrapper {
+    .button.icon > .wrapper {
         bottom: 0;
         left: 0;
         position: absolute;
@@ -174,45 +203,46 @@
         text-align: center;
         top: 0;
         padding: 0;
-        font-size: 1.5em;
         display: flex;
         justify-content: center;
         align-items: center;
-        line-height: 1em;
         min-height: unset;
+    }
+
+    .button.icon > .wrapper > .icon {
+        font-size: 1.5em;
     }
 
     /* -------------- */
     /* Standard theme */
     /* -------------- */
-    .button.standard {
-        background-color: var(--j-primary-color);
-        color: var(--j-secondary-color);
-        outline: none;
-    }
-
-    .button.standard.negative {
-        background-color: var(--j-secondary-color);
-        color: var(--j-primary-color);
+    .button.standard:hover, .button.standard:focus {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
     .button.standard:hover .wrapper, .button.standard:focus .wrapper {
-        background-color: rgba(0, 0, 0, 0.1);
         outline: none;
+    }
+
+    /* Ripple effect */
+
+    .button.ripple {
+        background-position: center;
+        transition: background 0.8s;
+    }
+
+    .button.ripple:hover {
+        background: radial-gradient(circle, transparent 1%, rgba(0, 0, 0, 0.1) 1%) center/15000%;
+    }
+
+    .button.ripple:active {
+        background-size: 100%;
+        transition: background 0s;
     }
 
     /* ---------- */
     /* Flat theme */
     /* ---------- */
-    .button.flat {
-        color: var(--j-primary-color);
-        outline: none;
-    }
-
-    .button.flat.negative {
-        color: var(--j-secondary-color);
-    }
-
     .button.flat:hover .wrapper, .button.flat:focus .wrapper {
         background-color: rgba(0, 0, 0, 0.1);
         outline: none;
@@ -223,17 +253,18 @@
     /* ------------- */
     .button.outline {
         border: 1px solid currentColor;
-        color: var(--j-primary-color);
-        outline: none;
+    }
+
+    .button.outline > .wrapper {
+        min-height: calc(2.572em - 2px);
     }
 
     .button.outline.negative {
         color: var(--j-secondary-color);
     }
 
-    .button.outline:hover .wrapper, .button.outline:focus .wrapper {
-        background-color: rgba(0, 0, 0, 0.1);
-        outline: none;
+    .button.outline:hover, .button.outline:focus {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
     /* ---------- */
