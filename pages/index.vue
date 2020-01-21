@@ -7,23 +7,46 @@
                 <div @click="maximize" class="dot debug"></div>
             </div>
         </div>
-        <nuxt-link :key="locale" :to="switchLocalePath(locale)" v-for="locale in availableLocales">
+        <div :key="locale" @click="setLocale(locale)" v-for="locale in availableLocales">
             {{ locale }}
-        </nuxt-link>
+        </div>
         <div>
             <h1 class="title">jtp.es</h1>
             <h2 class="subtitle">{{$t("message")}}</h2>
         </div>
+        <j-button text="standard" theme="standard"/>
+        <j-button :negative="true" text="standard" theme="standard"/>
+        <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="standard"/>
+        <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="standard"/>
+
+
+        <j-button bg-color="j-green" color="j-secondary" text="" theme="standard"/>
+        <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-orange" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-yellow" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-purple" color="j-complementary" text="" theme="standard"/>
+        <j-button bg-color="j-blue" color="j-complementary" text="" theme="standard"/>
     </div>
 </template>
 
-<script>
-    import {Component, Vue} from "vue-property-decorator";
+<script lang="ts">
+    import { Component, Vue } from "vue-property-decorator";
+    import JButton from "~/components/ui/JButton.vue";
+    import JIconButton from "~/components/ui/JIconButton.vue";
 
-    @Component
+    @Component({
+        components: {
+            JIconButton,
+            JButton
+        }
+    })
     export default class DefaultLayout extends Vue {
         maximized = false;
-        minimized = true;
+        minimized = false;
 
         // GETTERS & SETTERS --------------------------------------------------
 
@@ -36,11 +59,22 @@
         maximize() {
             this.maximized = !this.maximized;
             this.minimized = false;
+            this.$emit("changeTheme", "color");
         }
 
         minimize() {
             this.maximized = false;
             this.minimized = !this.minimized;
+            this.$emit("changeTheme", "white");
+        }
+
+        changeTheme(value: string) {
+            this.$nuxt.$emit("changeTheme", value);
+        }
+
+        setLocale(locale: string) {
+            // @ts-ignore
+            this.$nuxt.$i18n.setLocale(locale);
         }
 
         // WATCHERS -----------------------------------------------------------
@@ -51,15 +85,18 @@
 
 <style scoped>
     .index-view-root {
-        background-color: #f7f7f7;
         --menu-bar-height: 24px;
         border-radius: 7px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .2);
         height: calc(100vh - 80px);
-        overflow: hidden;
+        overflow: auto;
+
         transition: height 0.3s ease, width 0.3s ease;
 
         width: 1440px;
+
+        color: var(--text-color);
+        background-color: var(--bg-color);
     }
 
     .index-view-root.maximized {
@@ -108,7 +145,6 @@
     @media (max-width: 1440px) {
         .index-view-root {
             border-radius: 0;
-            height: 100vh;
             width: 100vw;
         }
     }
