@@ -10,9 +10,9 @@
          class="button"
          ref="button">
         <div class="wrapper">
-            <fa-icon :icon="leftIcon" v-if="this.leftIcon !== ''"/>
-            <span>{{text}}</span>
-            <fa-icon :icon="rightIcon" v-if="this.rightIcon !== ''"/>
+            <fa-icon :icon="leftIconValue" v-if="this.leftIcon !== ''"/>
+            <span v-if="!iconMode">{{text}}</span>
+            <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIcon !== ''"/>
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@
     @Component
     export default class JButton extends Vue {
         // Content
-        @Prop({required: true}) text!: string;
+        @Prop({default: ""}) text!: string;
 
         // Style
         @Prop({default: "standard"}) theme!: "standard" | "flat" | "outline" | "link";
@@ -32,8 +32,9 @@
         @Prop({default: ""}) color!: string;
         @Prop({default: ""}) bgColor!: string;
         @Prop({default: false}) negative!: boolean;
-        @Prop({default: ""}) leftIcon!: string | [string];
-        @Prop({default: ""}) rightIcon!: string | [string];
+        @Prop({default: false}) iconMode!: boolean;
+        @Prop({default: ""}) leftIcon!: string;
+        @Prop({default: ""}) rightIcon!: string;
 
         // Behaviour
         @Prop({default: -1}) focusIndex!: number;
@@ -44,6 +45,14 @@
         @Prop({default: ""}) label!: string;
 
         // GETTERS & SETTERS --------------------------------------------------
+
+        get leftIconValue() {
+            return this.leftIcon.split(/\s+/, 2) || "";
+        }
+
+        get rightIconValue() {
+            return this.rightIcon.split(/\s+/, 2) || "";
+        }
 
         get themeClasses() {
             const classes = [];
@@ -65,6 +74,10 @@
 
             if (this.negative) {
                 classes.push("negative");
+            }
+
+            if (this.iconMode) {
+                classes.push("icon");
             }
 
             return classes;
@@ -151,6 +164,22 @@
 
     .button.rounded {
         border-radius: 200px;
+    }
+
+    .button.icon .wrapper {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 0;
+        padding: 0;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1em;
+        min-height: unset;
     }
 
     /* -------------- */

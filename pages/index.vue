@@ -30,17 +30,16 @@
         <j-button bg-color="j-yellow" color="j-complementary" text="" theme="standard"/>
         <j-button bg-color="j-purple" color="j-complementary" text="" theme="standard"/>
         <j-button bg-color="j-blue" color="j-complementary" text="" theme="standard"/>
+        <j-button :icon-mode="true" bg-color="j-extra-2" color="j-complementary" left-icon="fab facebook"/>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
     import JButton from "~/components/ui/JButton.vue";
-    import JIconButton from "~/components/ui/JIconButton.vue";
 
     @Component({
         components: {
-            JIconButton,
             JButton
         }
     })
@@ -131,15 +130,15 @@
     }
 
     .menu-bar .dots .dot.error:hover {
-        background-color: var(--error-bg-color);
+        background-color: var(--j-orange-color);
     }
 
     .menu-bar .dots .dot.warn:hover {
-        background-color: var(--warn-bg-color);
+        background-color: var(--j-yellow-color);
     }
 
     .menu-bar .dots .dot.debug:hover {
-        background-color: var(--debug-bg-color);
+        background-color: var(--j-green-color);
     }
 
     @media (max-width: 1440px) {
