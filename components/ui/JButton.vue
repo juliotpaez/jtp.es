@@ -10,49 +10,84 @@
          class="button"
          ref="button">
         <div class="wrapper">
-            <fa-icon :class="{icon: iconMode}" :icon="leftIconValue" v-if="this.leftIcon !== ''"/>
+            <fa-icon :class="{icon: iconMode}" :icon="leftIconValue" v-if="this.leftIconValue !== ''"/>
             <span v-if="!iconMode">{{text}}</span>
-            <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIcon !== ''"/>
+            <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIconValue !== ''"/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from "~/node_modules/vue-property-decorator";
+    import "reflect-metadata";
+    import { Component, Emit, Prop, PropSync, Ref, Vue } from "~/node_modules/vue-property-decorator";
     import ColorUtils from "~/utils/ColorUtils";
 
     @Component
     export default class JButton extends Vue {
+        // PROPERTIES ---------------------------------------------------------
+
         // Content
-        @Prop({default: ""}) text!: string;
+        @Prop({default: ""}) readonly text!: string;
 
         // Style
-        @Prop({default: "standard"}) theme!: "standard" | "flat" | "outline" | "link";
-        @Prop({default: false}) rounded!: boolean;
-        @Prop({default: ""}) color!: string;
-        @Prop({default: ""}) bgColor!: string;
-        @Prop({default: false}) negative!: boolean;
-        @Prop({default: false}) iconMode!: boolean;
-        @Prop({default: ""}) leftIcon!: string;
-        @Prop({default: ""}) rightIcon!: string;
-        @Prop({default: null}) ripple!: boolean | null;
+        @Prop({default: "standard"}) readonly theme!: "standard" | "flat" | "outline" | "link";
+        @Prop({default: false}) readonly rounded!: boolean;
+        @Prop({default: ""}) readonly color!: string;
+        @Prop({default: ""}) readonly bgColor!: string;
+        @Prop({default: false}) readonly negative!: boolean;
+        @Prop({default: false}) readonly iconMode!: boolean;
+        @Prop({default: ""}) readonly leftIcon!: string;
+        @Prop({default: ""}) readonly rightIcon!: string;
+        @Prop({default: null}) readonly ripple!: boolean | null;
 
         // Behaviour
-        @Prop({default: -1}) focusIndex!: number;
-        @Prop({default: false}) focused!: boolean;
-        @Prop({default: true}) keyboardHandled!: boolean;
+        @Prop({default: -1}) readonly focusIndex!: number;
+        @PropSync("focused", {default: false}) syncFocused!: boolean;
+        @Prop({default: true}) readonly keyboardHandled!: boolean;
 
         // Accessibility
         @Prop({default: ""}) label!: string;
 
+        // INTERNAL DATA ------------------------------------------------------
+
+        @Ref() readonly button!: HTMLElement;
+
         // GETTERS & SETTERS --------------------------------------------------
 
         get leftIconValue() {
-            return this.leftIcon.split(/\s+/, 2) || "";
+            let value = this.leftIcon.trim().split(/\s+/, 2);
+
+            switch (value.length) {
+                case 0:
+                    return "";
+                case 1:
+                    if (value[0] === "") {
+                        return "";
+                    }
+
+                    value.unshift("fas");
+                    return value;
+                default:
+                    return value;
+            }
         }
 
         get rightIconValue() {
-            return this.rightIcon.split(/\s+/, 2) || "";
+            let value = this.rightIcon.trim().split(/\s+/, 2);
+
+            switch (value.length) {
+                case 0:
+                    return "";
+                case 1:
+                    if (value[0] === "") {
+                        return "";
+                    }
+
+                    value.unshift("fas");
+                    return value;
+                default:
+                    return value;
+            }
         }
 
         get rippleValue() {
@@ -80,10 +115,6 @@
 
             if (this.rounded) {
                 classes.push("rounded");
-            }
-
-            if (this.negative) {
-                classes.push("negative");
             }
 
             if (this.iconMode) {
@@ -141,22 +172,20 @@
             this.$emit("click", ev);
         }
 
-        focusIn() {
+        @Emit() focusIn() {
             if (!this.focusable) {
                 return;
             }
 
-            this.$emit("update:focused", true);
-            this.$emit("focusIn");
+            this.syncFocused = true;
         }
 
-        focusOut() {
+        @Emit() focusOut() {
             if (!this.focusable) {
                 return;
             }
 
-            this.$emit("update:focused", false);
-            this.$emit("focusOut");
+            this.syncFocused = false;
         }
 
         // WATCHERS -----------------------------------------------------------
@@ -164,88 +193,78 @@
         // HOOKS --------------------------------------------------------------
 
         mounted() {
-            if (this.focusable && this.focused) {
-                (this.$refs.button as HTMLElement).focus();
+            if (this.focusable && this.syncFocused) {
+                this.button.focus();
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .button {
+        border-radius: 4px;
         cursor: pointer;
         font-weight: bold;
         min-height: 2.572em;
         min-width: 2.572em;
-        overflow: hidden;
-        width: fit-content;
         outline: none;
-    }
+        overflow: hidden;
+        user-select: none;
+        width: fit-content;
 
-    .button > .wrapper {
-        height: 100%;
-        line-height: calc(2.572em - 8px);
-        min-height: 2.572em;
-        padding: 4px 16px;
-        text-align: center;
-        width: 100%;
-    }
+        &.rounded {
+            border-radius: 200px;
+        }
 
-    .button.rounded {
-        border-radius: 200px;
-    }
+        & > .wrapper {
+            height: 100%;
+            line-height: calc(2.572em - 8px);
+            min-height: 2.572em;
+            padding: 4px 16px;
+            text-align: center;
+            width: 100%;
+        }
 
-    .button.icon > .wrapper {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        text-align: center;
-        top: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: unset;
-    }
+        &.icon > .wrapper {
+            align-items: center;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            left: 0;
+            min-height: unset;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            top: 0;
 
-    .button.icon > .wrapper > .icon {
-        font-size: 1.5em;
+            & > .icon {
+                font-size: 1.5em;
+            }
+        }
     }
 
     /* -------------- */
     /* Standard theme */
     /* -------------- */
-    .button.standard:hover, .button.standard:focus {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    }
+    .button.standard {
+        &:hover, &:focus {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
 
-    .button.standard:hover .wrapper, .button.standard:focus .wrapper {
-        outline: none;
-    }
-
-    /* Ripple effect */
-
-    .button.ripple {
-        background-position: center;
-        transition: background 0.8s;
-    }
-
-    .button.ripple:hover {
-        background: radial-gradient(circle, transparent 1%, rgba(0, 0, 0, 0.1) 1%) center/15000%;
-    }
-
-    .button.ripple:active {
-        background-size: 100%;
-        transition: background 0s;
+        &:hover .wrapper, &:focus .wrapper {
+            outline: none;
+        }
     }
 
     /* ---------- */
     /* Flat theme */
     /* ---------- */
-    .button.flat:hover .wrapper, .button.flat:focus .wrapper {
-        background-color: rgba(0, 0, 0, 0.1);
-        outline: none;
+    .button.flat {
+        &:hover .wrapper, &:focus .wrapper {
+            background-color: rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
     }
 
     /* ------------- */
@@ -253,37 +272,49 @@
     /* ------------- */
     .button.outline {
         border: 1px solid currentColor;
-    }
 
-    .button.outline > .wrapper {
-        min-height: calc(2.572em - 2px);
-    }
+        & > .wrapper {
+            min-height: calc(2.572em - 2px);
+        }
 
-    .button.outline.negative {
-        color: var(--j-secondary-color);
-    }
-
-    .button.outline:hover, .button.outline:focus {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        &:hover, &:focus {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
     }
 
     /* ---------- */
     /* Link theme */
     /* ---------- */
-    .button.link,
-    .button.link > .wrapper {
-        color: var(--j-primary-color);
+    .button.link {
         line-height: unset;
         min-height: unset;
         min-width: unset;
         padding: unset;
+
+        & > .wrapper {
+            line-height: unset;
+            min-height: unset;
+            min-width: unset;
+            padding: unset;
+        }
+
+        &:hover .wrapper, &:focus .wrapper {
+            text-decoration: underline;
+        }
     }
 
-    .button.link.negative {
-        color: var(--j-secondary-color);
-    }
+    /* ------------- */
+    /* Ripple effect */
+    /* ------------- */
 
-    .button.link:hover .wrapper, .button.link:focus .wrapper {
-        text-decoration: underline;
+    .button.ripple {
+        background: radial-gradient(circle, transparent 1%, rgba(0, 0, 0, 0.1) 1%) center/15000%;
+        background-position: center;
+        transition: background 0.8s;
+
+        &:active {
+            background-size: 100%;
+            transition: background 0s;
+        }
     }
 </style>

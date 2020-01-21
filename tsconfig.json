@@ -26,6 +26,7 @@
             "@types/node",
             "@nuxt/types"
         ],
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noEmitHelpers": false,
         "importHelpers": true
