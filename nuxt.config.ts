@@ -38,12 +38,16 @@ const config: Configuration = {
     /*
      ** Global CSS
      */
-    css: ["static/css/global.css"],
+    css: ["@fortawesome/fontawesome-svg-core/styles.css", "static/css/global.css", "static/css/themes.css"],
 
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: [],
+    plugins: ["~/plugins/fontawesome",
+        {
+            src: "~/plugins/clientDirectives",
+            mode: "client"
+        }],
 
     /*
      ** Nuxt.js dev-modules
@@ -53,9 +57,12 @@ const config: Configuration = {
     /*
      ** Nuxt.js modules
      */
-    modules: ["@nuxtjs/axios", "@nuxtjs/proxy", "@nuxtjs/pwa", "@nuxtjs/dotenv", // "@nuxtjs/auth",
+    modules: ["@nuxtjs/axios", "@nuxtjs/proxy", "@nuxtjs/pwa", "@nuxtjs/dotenv",
+
+        // "@nuxtjs/auth",
         // "@nuxtjs/google-analytics",
         // "@nuxtjs/markdownit",
+
         ["nuxt-i18n", {
             /*
              ** Nuxt-i18n module configuration
@@ -70,6 +77,7 @@ const config: Configuration = {
                 iso: "es-ES"
             }],
             vueI18nLoader: true, // Allows i18n tags in vue files.
+            strategy: "no_prefix",
             defaultLocale: "en",
             vueI18n: {
                 fallbackLocale: "en",
@@ -81,6 +89,10 @@ const config: Configuration = {
                         greeting: "¡Hola mundo!"
                     }
                 }
+            },
+            detectBrowserLanguage: {
+                useCookie: true,
+                alwaysRedirect: true
             }
         } as AllOptionsInterface]],
 
