@@ -136,7 +136,7 @@
                 if (this.accentColor !== "") {
                     styles["--accent-color"] = ColorUtils.themeColorToCss(this.accentColor);
                 } else {
-                    styles["--accent-color"] = ColorUtils.wrapVariable("#ffffff");
+                    styles["--accent-color"] = ColorUtils.themeColorToCss("#ffffff");
                 }
             }
 
@@ -280,6 +280,13 @@
         }
 
         &.inset-thumb {
+            min-width: calc(2.572em * 1.4);
+
+            .left,
+            .right {
+                min-width: 1.8em;
+            }
+
             .thumb {
                 height: 1.8em;
                 top: calc((2.572em - 1.8em) / 2);
@@ -302,7 +309,12 @@
         }
 
         &.material {
-            min-width: calc(2.572em * 1.5);
+            min-width: calc(2.572em * 1.4);
+
+            .left,
+            .right {
+                min-width: unset;
+            }
 
             .thumb {
                 height: 1.8em;

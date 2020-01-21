@@ -125,6 +125,12 @@
                       true-color="j-green"
                       true-icon="chevron-right"
                       v-model="checked"/>
+            <j-switch :inset-thumb="true"
+                      :rounded="true"
+                      :tricolor="true"
+                      false-icon="fab facebook"
+                      true-icon="fab twitter"
+                      v-model="checked"/>
         </div>
     </div>
 </template>
