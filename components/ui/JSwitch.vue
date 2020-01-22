@@ -14,10 +14,12 @@
             <div class="thumb-box">
                 <div class="left">
                     <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
+                    <span v-else-if="trueTextValue !== ''">{{trueTextValue}}</span>
                 </div>
                 <div class="thumb"></div>
                 <div class="right">
                     <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
+                    <span v-else-if="falseTextValue !== ''">{{falseTextValue}}</span>
                 </div>
             </div>
         </div>
@@ -36,15 +38,18 @@
 
         // PROPERTIES ---------------------------------------------------------
 
+        // Content
+        @Prop({default: ""}) readonly trueIcon!: string;
+        @Prop({default: ""}) readonly trueText!: string;
+        @Prop({default: ""}) readonly falseIcon!: string;
+        @Prop({default: ""}) readonly falseText!: string;
+
         // Style
         @Prop({default: false}) readonly rounded!: boolean;
-        @Prop({default: false}) readonly insetThumb!: boolean;
         @Prop({default: false}) readonly tricolor!: boolean; // Enables accent color
         @Prop({default: ""}) readonly trueColor!: string;
         @Prop({default: ""}) readonly falseColor!: string;
         @Prop({default: ""}) readonly accentColor!: string;
-        @Prop({default: ""}) readonly trueIcon!: string;
-        @Prop({default: ""}) readonly falseIcon!: string;
 
         // Behaviour
         @Prop({default: -1}) readonly focusIndex!: number;
@@ -78,6 +83,10 @@
             }
         }
 
+        get trueTextValue() {
+            return this.trueText.substr(0, 3);
+        }
+
         get falseIconValue() {
             let value = this.falseIcon.trim().split(/\s+/, 2);
 
@@ -96,15 +105,15 @@
             }
         }
 
+        get falseTextValue() {
+            return this.falseText.substr(0, 3);
+        }
+
         get themeClasses() {
             const classes = [];
 
             if (this.rounded) {
                 classes.push("rounded");
-            }
-
-            if (this.insetThumb) {
-                classes.push("inset-thumb");
             }
 
             if (this.tricolor) {
@@ -186,6 +195,7 @@
 <style lang="scss" scoped>
     $widthSide: 2.572em;
     $widthSideMin: $widthSide * 1.8em / 2.572em;
+    $padding: ((2 * $widthSide) - $widthSide - $widthSideMin) / 2;
 
     .switch {
         cursor: pointer;
@@ -202,9 +212,9 @@
             flex-wrap: nowrap;
             height: $widthSide;
             justify-content: space-between;
-            min-height: $widthSide;
+            overflow: hidden;
             text-align: center;
-            width: ($widthSide * 2);
+            width: ($widthSide + $widthSideMin + $padding);
 
             .thumb-box {
                 align-items: center;
@@ -214,7 +224,7 @@
                 position: absolute;
                 top: 0;
                 transition: right 0.3s ease-out;
-                width: ($widthSide * 3);
+                width: (2 * $widthSide + $widthSideMin);
 
                 .left {
                     color: var(--true-color);
@@ -224,8 +234,9 @@
                 .thumb {
                     border-radius: 4px;
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-                    height: 100%;
-                    width: $widthSide;
+                    height: $widthSideMin;
+                    transition: background-color 0.3s ease;
+                    width: $widthSideMin;
                 }
 
                 .right {
@@ -235,12 +246,14 @@
             }
 
             .rail {
+                border: 1px solid rgba(0, 0, 0, 0.12);
                 border-radius: 4px;
                 bottom: 0;
                 left: 0;
                 position: absolute;
                 right: 0;
                 top: 0;
+                transition: background-color 0.3s ease;
             }
 
             &.on {
@@ -249,7 +262,7 @@
                 }
 
                 .thumb-box {
-                    right: (-$widthSide);
+                    right: (-$widthSide + $padding);
 
                     .thumb {
                         background-color: var(--true-color);
@@ -268,29 +281,6 @@
                     .thumb {
                         background-color: var(--false-color);
                     }
-                }
-            }
-        }
-
-        &.inset-thumb {
-            $padding: ((2 * $widthSide) - $widthSide - $widthSideMin) / 2;
-
-            .thumb-box {
-                width: (2 * $widthSide + $widthSideMin);
-            }
-
-            .thumb {
-                height: $widthSideMin !important;
-                width: $widthSideMin !important;
-            }
-
-            .wrapper {
-                width: ($widthSide + $widthSideMin + $padding);
-            }
-
-            .wrapper.on {
-                .thumb-box {
-                    right: (-$widthSide + $padding);
                 }
             }
         }
