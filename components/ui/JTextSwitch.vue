@@ -51,6 +51,7 @@
         // Style
         @Prop({default: false}) readonly rounded!: boolean;
         @Prop({default: false}) readonly tricolor!: boolean; // Enables accent color
+        @Prop({default: false}) readonly negative!: boolean;
         @Prop({default: ""}) readonly trueColor!: string;
         @Prop({default: ""}) readonly falseColor!: string;
         @Prop({default: ""}) readonly accentColor!: string;
@@ -125,13 +126,21 @@
             if (this.trueColor !== "") {
                 styles["--true-color"] = ColorUtils.themeColorToCss(this.trueColor);
             } else {
-                styles["--true-color"] = ColorUtils.wrapVariable("j-primary");
+                if (this.negative) {
+                    styles["--true-color"] = ColorUtils.wrapVariable("j-secondary");
+                } else {
+                    styles["--true-color"] = ColorUtils.wrapVariable("j-primary");
+                }
             }
 
             if (this.falseColor !== "") {
                 styles["--false-color"] = ColorUtils.themeColorToCss(this.falseColor);
             } else {
-                styles["--false-color"] = ColorUtils.wrapVariable("j-secondary");
+                if (this.negative) {
+                    styles["--false-color"] = ColorUtils.wrapVariable("j-primary");
+                } else {
+                    styles["--false-color"] = ColorUtils.wrapVariable("j-secondary");
+                }
             }
 
             if (this.tricolor) {

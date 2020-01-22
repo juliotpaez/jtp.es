@@ -28,6 +28,8 @@
 
         // Content
         @Prop({default: ""}) readonly text!: string;
+        @Prop({default: ""}) readonly leftIcon!: string;
+        @Prop({default: ""}) readonly rightIcon!: string;
 
         // Style
         @Prop({default: "standard"}) readonly theme!: "standard" | "flat" | "outline" | "link";
@@ -36,8 +38,6 @@
         @Prop({default: ""}) readonly bgColor!: string;
         @Prop({default: false}) readonly negative!: boolean;
         @Prop({default: false}) readonly iconMode!: boolean;
-        @Prop({default: ""}) readonly leftIcon!: string;
-        @Prop({default: ""}) readonly rightIcon!: string;
         @Prop({default: null}) readonly ripple!: boolean | null;
 
         // Behaviour
