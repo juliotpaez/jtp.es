@@ -11,15 +11,13 @@
          ref="switch">
         <div :class="{on:checked, off:!checked}" class="wrapper">
             <div class="rail"></div>
-            <div class="thumb-box">
-                <div class="left">
-                    <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
-                </div>
-                <div class="thumb"></div>
-                <div class="right">
-                    <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
-                </div>
+            <div class="left">
+                <fa-icon :icon="trueIconValue" v-if="!material && trueIconValue !== ''"/>
             </div>
+            <div class="right">
+                <fa-icon :icon="falseIconValue" v-if="!material && falseIconValue !== ''"/>
+            </div>
+            <div class="thumb"></div>
         </div>
     </div>
 </template>
@@ -39,6 +37,7 @@
         // Style
         @Prop({default: false}) readonly rounded!: boolean;
         @Prop({default: false}) readonly insetThumb!: boolean;
+        @Prop({default: false}) readonly material!: boolean;
         @Prop({default: false}) readonly tricolor!: boolean; // Enables accent color
         @Prop({default: ""}) readonly trueColor!: string;
         @Prop({default: ""}) readonly falseColor!: string;
@@ -103,7 +102,11 @@
                 classes.push("rounded");
             }
 
-            if (this.insetThumb) {
+            if (this.material) {
+                classes.push("material");
+            }
+
+            if (!this.material && this.insetThumb) {
                 classes.push("inset-thumb");
             }
 
@@ -184,130 +187,166 @@
 </script>
 
 <style lang="scss" scoped>
-    $widthSide: 2.572em;
-    $widthSideMin: $widthSide * 1.8em / 2.572em;
-
     .switch {
         cursor: pointer;
         font-weight: bold;
+        min-height: 2.572em;
+        min-width: calc(2.572em * 2);
         outline: none;
-        overflow: hidden;
-        padding: 2px;
         user-select: none;
         width: fit-content;
 
-        .wrapper {
+        & > .wrapper {
             border-radius: 4px;
             display: flex;
             flex-wrap: nowrap;
-            height: $widthSide;
+            height: 100%;
             justify-content: space-between;
-            min-height: $widthSide;
+            line-height: calc(2.572em - 4px * 2);
+            min-height: 2.572em;
+            padding: 4px;
             text-align: center;
-            width: ($widthSide * 2);
+            width: 100%;
 
-            .thumb-box {
-                align-items: center;
-                bottom: 0;
-                display: flex;
-                justify-content: space-between;
+            & > .thumb {
+                border-radius: 4px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                height: 2.572em;
                 position: absolute;
                 top: 0;
-                transition: right 0.3s ease-out;
-                width: ($widthSide * 3);
-
-                .left {
-                    color: var(--true-color);
-                    width: ($widthSide);
-                }
-
-                .thumb {
-                    border-radius: 4px;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-                    height: 100%;
-                    width: $widthSide;
-                }
-
-                .right {
-                    color: var(--false-color);
-                    width: ($widthSide);
-                }
+                transition: right 0.3s, background-color 0.3s;
+                width: 2.572em;
             }
 
-            .rail {
+            & > .rail {
                 border-radius: 4px;
                 bottom: 0;
                 left: 0;
                 position: absolute;
                 right: 0;
                 top: 0;
+                transition: background-color 0.3s;
+            }
+
+            & > .left {
+                color: var(--true-color);
+                min-width: calc(2.572em - 8px);
+            }
+
+            & > .right {
+                color: var(--false-color);
+                min-width: calc(2.572em - 8px);
             }
 
             &.on {
-                .rail {
+                & > .rail {
                     background-color: var(--false-color);
                 }
 
-                .thumb-box {
-                    right: (-$widthSide);
-
-                    .thumb {
-                        background-color: var(--true-color);
-                    }
+                & > .thumb {
+                    animation: expand-to-right 0.4s;
+                    background-color: var(--true-color);
+                    right: 0;
                 }
             }
 
             &.off {
-                .rail {
+                & > .rail {
                     background-color: var(--true-color);
                 }
 
-                .thumb-box {
-                    right: 0;
-
-                    .thumb {
-                        background-color: var(--false-color);
-                    }
-                }
-            }
-        }
-
-        &.inset-thumb {
-            $padding: ((2 * $widthSide) - $widthSide - $widthSideMin) / 2;
-
-            .thumb-box {
-                width: (2 * $widthSide + $widthSideMin);
-            }
-
-            .thumb {
-                height: $widthSideMin !important;
-                width: $widthSideMin !important;
-            }
-
-            .wrapper {
-                width: ($widthSide + $widthSideMin + $padding);
-            }
-
-            .wrapper.on {
-                .thumb-box {
-                    right: (-$widthSide + $padding);
+                & > .thumb {
+                    animation: expand-to-left 0.4s;
+                    background-color: var(--false-color);
+                    left: 0;
                 }
             }
         }
 
         &.rounded {
-            border-radius: 200px !important;
+            border-radius: 200px;
 
-            .wrapper {
-                border-radius: 200px !important;
+            & > .wrapper {
+                border-radius: 200px;
             }
 
             .thumb {
-                border-radius: 200px !important;
+                border-radius: 200px;
             }
 
             .rail {
-                border-radius: 200px !important;
+                border-radius: 200px;
+            }
+        }
+
+        &.inset-thumb {
+            min-width: calc(2.572em * 1.4);
+
+            .left,
+            .right {
+                min-width: 1.8em;
+            }
+
+            .thumb {
+                height: 1.8em;
+                top: calc((2.572em - 1.8em) / 2);
+                width: 1.8em;
+            }
+
+            & > .wrapper.on {
+                .thumb {
+                    animation: expand-to-right-inset 0.4s;
+                    right: calc((2.572em - 1.8em) / 2);
+                }
+            }
+
+            & > .wrapper.off {
+                .thumb {
+                    animation: expand-to-left-inset 0.4s;
+                    left: calc((2.572em - 1.8em) / 2);
+                }
+            }
+        }
+
+        &.material {
+            min-width: calc(2.572em * 1.4);
+
+            .left,
+            .right {
+                min-width: unset;
+            }
+
+            .thumb {
+                height: 1.8em;
+                top: calc((2.572em - 1.8em) / 2);
+                width: 1.8em;
+            }
+
+            .rail {
+                bottom: calc(2.572em / 3);
+                top: calc(2.572em / 3);
+            }
+
+            & > .wrapper.on {
+                .thumb {
+                    animation: expand-to-right-material 0.4s;
+                }
+            }
+
+            & > .wrapper.off {
+                .thumb {
+                    animation: expand-to-left-material 0.4s;
+                }
+            }
+
+            &:hover, &:focus {
+                & > .wrapper {
+                    box-shadow: none;
+                }
+
+                .rail {
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                }
             }
         }
 
@@ -318,9 +357,81 @@
         }
 
         &:hover, &:focus {
-            .wrapper {
+            & > .wrapper {
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             }
+        }
+    }
+
+    @keyframes expand-to-right {
+        0% {
+            right: 2.572em;
+        }
+        50% {
+            width: 2.7em;
+        }
+        100% {
+            right: 0;
+        }
+    }
+
+    @keyframes expand-to-left {
+        0% {
+            left: 2.572em;
+        }
+        50% {
+            width: 2.7em;
+        }
+        100% {
+            left: 0;
+        }
+    }
+
+    @keyframes expand-to-right-inset {
+        0% {
+            right: calc(2.572em - (2.572em - 1.8em) / 2);
+        }
+        50% {
+            width: 2.1em;
+        }
+        100% {
+            right: calc((2.572em - 1.8em) / 2);
+        }
+    }
+
+    @keyframes expand-to-left-inset {
+        0% {
+            left: calc(2.572em - (2.572em - 1.8em) / 2);
+        }
+        50% {
+            width: 2.1em;
+        }
+        100% {
+            left: calc((2.572em - 1.8em) / 2);
+        }
+    }
+
+    @keyframes expand-to-right-material {
+        0% {
+            right: 2.572em;
+        }
+        50% {
+            width: 2.1em;
+        }
+        100% {
+            right: 0;
+        }
+    }
+
+    @keyframes expand-to-left-material {
+        0% {
+            left: 2.572em;
+        }
+        50% {
+            width: 2.1em;
+        }
+        100% {
+            left: 0;
         }
     }
 </style>
