@@ -248,6 +248,8 @@
     /* Standard theme */
     /* -------------- */
     .button.standard {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+
         &:hover, &:focus {
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         }
@@ -306,7 +308,6 @@
     /* ------------- */
     /* Ripple effect */
     /* ------------- */
-
     .button.ripple {
         background: radial-gradient(circle, transparent 1%, rgba(0, 0, 0, 0.1) 1%) center/15000%;
         background-position: center;

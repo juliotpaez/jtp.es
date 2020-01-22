@@ -223,7 +223,7 @@
                 justify-content: space-between;
                 position: absolute;
                 top: 0;
-                transition: right 0.3s ease-out;
+                transition: right 0.4s ease-out;
                 width: (2 * $widthSide + $widthSideMin);
 
                 .left {
@@ -235,7 +235,7 @@
                     border-radius: 4px;
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
                     height: $widthSideMin;
-                    transition: background-color 0.3s ease;
+                    transition: background-color 0.4s ease;
                     width: $widthSideMin;
                 }
 
@@ -253,7 +253,7 @@
                 position: absolute;
                 right: 0;
                 top: 0;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.4s ease;
             }
 
             &.on {
