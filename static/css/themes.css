@@ -64,11 +64,12 @@ body {
     --j-extra-4-color: #ac8798;
     --j-extra-5-color: #a6be87;
     --j-extra-6-color: #77bea1;
+    --j-extra-7-color: #ffe8a3;
 
     /**
      * Great combinations:
-     *   any extra (2, 5) with primary and the other way around also
-     *   any extra (2, 5) with complementary and the other way around also
+     *   any extra (2, 5, 7) with primary and the other way around also
+     *   any extra (2, 5, 7) with complementary and the other way around also
      */
 
     /* ------------------- */
