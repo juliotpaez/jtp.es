@@ -8,20 +8,20 @@
          @focusout="focusOut"
          @keyup.enter="onEnter"
          class="text-switch"
-         ref="text-switch">
+         ref="textSwitch">
         <div :class="{on:checked, off:!checked}" class="wrapper">
             <div class="left">
                 <span>{{falseText}}</span>
             </div>
             <div class="middle">
-                <div class="middle-container">
-                    <div key="true-icon">
+                <transition mode="out-in" name="zoom-in">
+                    <div key="true-icon" v-if="checked">
                         <fa-icon :icon="trueIconValue" class="on-icon"/>
                     </div>
-                    <div key="false-icon">
+                    <div key="false-icon" v-else>
                         <fa-icon :icon="falseIconValue" class="off-icon"/>
                     </div>
-                </div>
+                </transition>
             </div>
             <div class="right">
                 <span>{{trueText}}</span>
@@ -66,7 +66,7 @@
 
         // INTERNAL DATA ------------------------------------------------------
 
-        @Ref() readonly switch!: HTMLElement;
+        @Ref() readonly textSwitch!: HTMLElement;
 
         // GETTERS & SETTERS --------------------------------------------------
 
@@ -191,16 +191,16 @@
 
         mounted() {
             if (this.focusable && this.syncFocused) {
-                this.switch.focus();
+                this.textSwitch.focus();
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    $size: 2.572em;
-    $minSize: 2em;
-    $padding: 0.4em;
+    $size: 2em;
+    $minSize: $size * 2em / 2.572em;
+    $padding: $size * 0.4em / 2.572em;
 
     .text-switch {
         cursor: pointer;
@@ -220,10 +220,10 @@
             height: $size;
             justify-content: space-between;
             overflow: hidden;
-            padding-left: 0.8em;
-            padding-right: 0.8em;
+            padding-left: $size * 0.8em / 2.572em;
+            padding-right: $size * 0.8em / 2.572em;
             text-align: center;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.6s ease;
             width: fit-content;
 
             & > * {
@@ -232,42 +232,34 @@
                 height: 100%;
                 justify-content: center;
                 opacity: 1;
-                transition: opacity 0.3s ease;
+                transition: opacity 0.6s ease;
             }
 
             .middle {
-                margin-left: 0.2em;
-                margin-right: 0.2em;
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                margin-left: $size * 0.2em / 2.572em;
+                margin-right: $size * 0.2em / 2.572em;
                 overflow: hidden;
                 width: $minSize;
 
-                .middle-container {
+                & > div {
                     align-items: center;
-                    bottom: 0;
                     display: flex;
+                    height: $minSize;
                     justify-content: center;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    transition: right 0.4s ease-out;
+                    width: $minSize;
 
-                    & > div {
-                        align-items: center;
-                        display: flex;
-                        height: $minSize;
-                        justify-content: center;
-                        width: $minSize;
-
-                        & > * {
-                            font-size: 1.7em;
-                        }
+                    & > * {
+                        font-size: $size * 1.7em / 2.572em;
                     }
+                }
 
-                    .on-icon,
-                    .off-icon {
-                        transform: scale(1);
-                        transition: transform 0.4s ease-out;
-                    }
+                .on-icon,
+                .off-icon {
+                    transform: scale(1);
+                    transition: transform 0.4s ease-out;
                 }
             }
 
@@ -278,14 +270,6 @@
                 .left {
                     opacity: 0.4;
                 }
-
-                .middle-container {
-                    right: (-$minSize);
-
-                    .off-icon {
-                        transform: scale(0.2);
-                    }
-                }
             }
 
             &.off {
@@ -294,12 +278,6 @@
 
                 .right {
                     opacity: 0.4;
-                }
-
-                .middle-container {
-                    .on-icon {
-                        transform: scale(0.2);
-                    }
                 }
             }
         }
@@ -321,5 +299,20 @@
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             }
         }
+    }
+
+    .zoom-in-enter-active,
+    .zoom-in-leave-active {
+        transition: transform 0.3s ease;
+    }
+
+    .zoom-in-enter-to,
+    .zoom-in-leave {
+        transform: scale(1);
+    }
+
+    .zoom-in-enter,
+    .zoom-in-leave-to {
+        transform: scale(0);
     }
 </style>
