@@ -171,7 +171,7 @@
                 if (this.accentColor !== "") {
                     styles["--accent-color"] = ColorUtils.themeColorToCss(this.accentColor);
                 } else {
-                    styles["--accent-color"] = ColorUtils.themeColorToCss("#ffffff");
+                    styles["--accent-color"] = ColorUtils.wrapVariable("j-auxiliar");
                 }
             }
 
@@ -274,9 +274,9 @@
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
                 color: var(--false-color);
                 display: flex;
-                height: calc(#{$size} - 1px);
+                height: calc(#{$size} - 2px);
                 justify-content: center;
-                width: calc(#{$size} - 1px);
+                width: calc(#{$size} - 2px);
 
                 & > * {
                     font-size: $size * 1.5em / 2.572em;

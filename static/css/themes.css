@@ -26,7 +26,9 @@ body {
     /*  Theme colors  */
     /* -------------- */
     --j-secondary-color: #ffffff;
+    --j-complementary-color: #000000;
     --j-primary-color: #2b2c2e;
+    --j-auxiliar-color: #adaeaf;
 
     /* ------------------- */
     /*  Background colors  */
@@ -37,12 +39,6 @@ body {
 }
 
 .theme-white {
-    /* -------------- */
-    /*  Theme colors  */
-    /* -------------- */
-    --j-secondary-color: #ffffff;
-    --j-primary-color: #2b2c2e;
-
     /* ------------------- */
     /*  Background colors  */
     /* -------------–----- */
@@ -58,6 +54,7 @@ body {
     --j-primary-color: #344955;
     --j-complementary-color: #554034;
     --j-secondary-color: #f9aa33;
+    --j-auxiliar-color: #ffffff;
     --j-extra-1-color: #b5aaa4;
     --j-extra-2-color: #f5eecc;
     --j-extra-3-color: #7d859b;

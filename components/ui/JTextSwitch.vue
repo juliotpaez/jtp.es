@@ -153,7 +153,7 @@
                 if (this.accentColor !== "") {
                     styles["--accent-color"] = ColorUtils.themeColorToCss(this.accentColor);
                 } else {
-                    styles["--accent-color"] = ColorUtils.themeColorToCss("#ffffff");
+                    styles["--accent-color"] = ColorUtils.wrapVariable("j-auxiliar");
                 }
             }
 
