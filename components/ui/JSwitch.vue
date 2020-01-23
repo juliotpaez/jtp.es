@@ -202,9 +202,9 @@
 </script>
 
 <style lang="scss" scoped>
-    $widthSide: 2.572em;
-    $widthSideMin: $widthSide * 1.8em / 2.572em;
-    $padding: ((2 * $widthSide) - $widthSide - $widthSideMin) / 2;
+    $size: 2em;
+    $minSize: $size * 1.8em / 2.572em;
+    $padding: ((2 * $size) - $size - $minSize) / 2;
 
     .switch {
         cursor: pointer;
@@ -219,11 +219,11 @@
             border-radius: 4px;
             display: flex;
             flex-wrap: nowrap;
-            height: $widthSide;
+            height: $size;
             justify-content: space-between;
             overflow: hidden;
             text-align: center;
-            width: ($widthSide + $widthSideMin + $padding);
+            width: ($size + $minSize + $padding);
 
             .thumb-box {
                 align-items: center;
@@ -233,24 +233,24 @@
                 position: absolute;
                 top: 0;
                 transition: right 0.4s ease-out;
-                width: (2 * $widthSide + $widthSideMin);
+                width: (2 * $size + $minSize);
 
                 .left {
                     color: var(--true-color);
-                    width: ($widthSide);
+                    width: ($size);
                 }
 
                 .thumb {
                     border-radius: 4px;
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-                    height: $widthSideMin;
+                    height: $minSize;
                     transition: background-color 0.4s ease;
-                    width: $widthSideMin;
+                    width: $minSize;
                 }
 
                 .right {
                     color: var(--false-color);
-                    width: ($widthSide);
+                    width: ($size);
                 }
             }
 
@@ -271,7 +271,7 @@
                 }
 
                 .thumb-box {
-                    right: (-$widthSide + $padding);
+                    right: (-$size + $padding);
 
                     .thumb {
                         background-color: var(--true-color);
