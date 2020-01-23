@@ -1,137 +1,64 @@
 <template>
-    <div :class="{maximized, minimized}" class="index-view-root">
-        <div class="menu-bar">
-            <div class="dots">
-                <div class="dot error"></div>
-                <div @click="minimize" class="dot warn"></div>
-                <div @click="maximize" class="dot debug"></div>
+    <div class="intro-view theme-color">
+        <div class="background-container">
+            <transition @after-enter="afterBackgroundAppear" name="background-change">
+                <div class="background-effect" v-if="showBackground">
+                    <div class="background">
+                        <div class="left"></div>
+                        <div class="right"></div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+        <transition @after-enter="afterIconAppear" name="icon-appear">
+            <div @mouseenter="showMe = true" @mouseleave="showMe = false" class="icon-box" v-show="showIcon">
+                <transition mode="out-in" name="me-animation">
+                    <div class="icon-me" key="me" v-if="showMe"></div>
+                    <div class="icon" key="icon" v-else></div>
+                </transition>
             </div>
-        </div>
-        <div :key="locale" v-for="locale in availableLocales">
-            <j-button :text="locale" @click="setLocale(locale)"/>
-        </div>
-        <!--        <div>-->
-        <!--            <h1 class="title">jtp.es</h1>-->
-        <!--            <h2 class="subtitle">{{$t("message")}}</h2>-->
-        <!--        </div>-->
-
-        <div class="buttons">
-            <j-button text="standard" theme="standard"/>
-            <j-button :negative="true" text="standard negative" theme="standard"/>
-            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="standard"/>
-            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-green" color="j-secondary" text="" theme="standard"/>
-            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-orange" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-purple" color="j-complementary" text="" theme="standard"/>
-            <j-button bg-color="j-blue" color="j-complementary" text="" theme="standard"/>
-            <j-button :icon-mode="true"
-                      :rounded="true"
-                      bg-color="j-extra-2"
-                      color="j-complementary"
-                      left-icon="fab facebook"/>
-        </div>
-        <div class="buttons">
-            <j-button text="standard" theme="flat"/>
-            <j-button :negative="true" text="standard negative" theme="flat"/>
-            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="flat"/>
-            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-green" color="j-secondary" text="" theme="flat"/>
-            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-orange" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-purple" color="j-complementary" text="" theme="flat"/>
-            <j-button bg-color="j-blue" color="j-complementary" text="" theme="flat"/>
-            <j-button :icon-mode="true"
-                      :rounded="true"
-                      bg-color="j-extra-2"
-                      color="j-complementary"
-                      left-icon="fab facebook"
-                      theme="flat"/>
-        </div>
-        <div class="buttons">
-            <j-button text="standard" theme="outline"/>
-            <j-button :negative="true" text="standard negative" theme="outline"/>
-            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="outline"/>
-            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-green" color="j-secondary" text="" theme="outline"/>
-            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-orange" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-purple" color="j-complementary" text="" theme="outline"/>
-            <j-button bg-color="j-blue" color="j-complementary" text="" theme="outline"/>
-            <j-button :icon-mode="true"
-                      :rounded="true"
-                      bg-color="j-extra-2"
-                      color="j-complementary"
-                      left-icon="fab facebook"
-                      theme="outline"/>
-        </div>
-        <div class="buttons">
-            <j-button text="standard" theme="link"/>
-            <j-button :negative="true" text="standard negative" theme="link"/>
-            <j-button bg-color="j-extra-1" color="j-secondary" text="" theme="link"/>
-            <j-button bg-color="j-extra-2" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-extra-3" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-extra-4" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-extra-5" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-extra-6" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-green" color="j-secondary" text="" theme="link"/>
-            <j-button bg-color="j-dark-green" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-orange" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-yellow" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-purple" color="j-complementary" text="" theme="link"/>
-            <j-button bg-color="j-blue" color="j-complementary" text="" theme="link"/>
-            <j-button :icon-mode="true"
-                      :rounded="true"
-                      bg-color="j-extra-2"
-                      color="j-complementary"
-                      left-icon="fab facebook"
-                      theme="link"/>
-        </div>
-
-        <div class="buttons">
-            <j-switch :rounded="true" false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
-            <j-switch false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
-            <j-switch :inset-thumb="true" false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
-            <j-switch :inset-thumb="true"
-                      :rounded="true"
-                      false-icon="chevron-left"
-                      true-icon="chevron-right"
-                      v-model="checked"/>
-            <j-switch :material="true" false-icon="chevron-left" true-icon="chevron-right" v-model="checked"/>
-            <j-switch :material="true"
-                      :rounded="true"
-                      false-icon="chevron-left"
-                      true-icon="chevron-right"
-                      v-model="checked"/>
-            <j-switch :tricolor="true"
-                      accent-color="white"
-                      false-color="j-orange"
-                      false-icon="chevron-left"
-                      true-color="j-green"
-                      true-icon="chevron-right"
-                      v-model="checked"/>
-            <j-switch :inset-thumb="true"
-                      :rounded="true"
-                      :tricolor="true"
-                      false-icon="fab facebook"
-                      true-icon="fab twitter"
-                      v-model="checked"/>
-        </div>
+        </transition>
+        <transition @after-enter="afterBoxAppear" name="box-appear">
+            <div class="box" v-if="showBox">
+                <div class="box-content">
+                    <div class="title">
+                        <span>{{$t("title")}}</span>
+                    </div>
+                    <div class="message">{{$t("constructionMessage")}}</div>
+                    <div class="message">{{$t("message")}}</div>
+                    <div class="buttons">
+                        <j-button :focus-index="0"
+                                  :negative="true"
+                                  :rounded="true"
+                                  @click="navigateLinkedIn"
+                                  bg-color="j-extra-2"
+                                  color="j-complementary"
+                                  left-icon="fab linkedin"/>
+                        <j-button :focus-index="1"
+                                  :negative="true"
+                                  :rounded="true"
+                                  @click="navigateGithub"
+                                  bg-color="j-extra-2"
+                                  color="j-complementary"
+                                  left-icon="fab github"/>
+                    </div>
+                    <div class="lang">
+                        <j-switch :rounded="true"
+                                  :tricolor="true"
+                                  false-color="j-extra-2"
+                                  true-color="j-extra-2"
+                                  v-model="isSpanish">
+                            <template v-slot:true-icon>
+                                <img alt="spanish language" src="~/assets/img/spain_flag.svg">
+                            </template>
+                            <template v-slot:false-icon>
+                                <img alt="english language" src="~/assets/img/usa_flag.svg">
+                            </template>
+                        </j-switch>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -146,131 +73,316 @@
             JButton
         }
     })
-    export default class DefaultLayout extends Vue {
-        maximized = false;
-        minimized = false;
-        checked = false;
+    export default class IntroView extends Vue {
+        // Animation
+        showIcon = false;
+        showBackground = false;
+        showBox = false;
+
+        // Values
+        showMe = false;
 
         // GETTERS & SETTERS --------------------------------------------------
 
-        get availableLocales() {
-            return this.$i18n.availableLocales.filter(i => i !== this.$i18n.locale);
-        }
-
         // METHODS ------------------------------------------------------------
 
-        maximize() {
-            this.maximized = !this.maximized;
-            this.minimized = false;
-            this.$emit("changeTheme", "color");
+        get isSpanish() {
+            return this.$i18n.locale === "es";
         }
 
-        minimize() {
-            this.maximized = false;
-            this.minimized = !this.minimized;
-            this.$emit("changeTheme", "white");
+        set isSpanish(value: boolean) {
+            if (value === this.isSpanish) {
+                return;
+            }
+
+            if (value) {
+                // @ts-ignore
+                this.$nuxt.$i18n.setLocale("es");
+            } else {
+                // @ts-ignore
+                this.$nuxt.$i18n.setLocale("en");
+            }
         }
 
-        changeTheme(value: string) {
-            this.$nuxt.$emit("changeTheme", value);
+        afterIconAppear() {
+            this.showBackground = true;
         }
 
-        setLocale(locale: string) {
-            // @ts-ignore
-            this.$nuxt.$i18n.setLocale(locale);
+        afterBackgroundAppear() {
+            this.$store.commit("changeTheme", "color");
+            this.showBox = true;
+        }
+
+        afterBoxAppear() {
+            this.showBackground = false;
+        }
+
+        navigateLinkedIn() {
+            window.open("https://www.linkedin.com/in/julio-treviño-páez/");
+        }
+
+        navigateGithub() {
+            window.open("https://github.com/juliotpaez");
         }
 
         // WATCHERS -----------------------------------------------------------
 
         // HOOKS --------------------------------------------------------------
+
+        mounted() {
+            setTimeout(() => {
+                this.showIcon = true;
+            }, 500);
+        }
     }
 </script>
 
-<style scoped>
-    .index-view-root {
-        --menu-bar-height: 24px;
-        border-radius: 7px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .2);
-        height: calc(100vh - 80px);
-        overflow: auto;
-
-        transition: height 0.3s ease, width 0.3s ease;
-
-        width: 1440px;
-
-        color: var(--text-color);
-        background-color: var(--bg-color);
+<style lang="scss" scoped>
+    .intro-view {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
     }
 
-    .index-view-root.maximized {
-        border-radius: 0;
+    .background-container {
+        align-items: center;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .background-effect {
+        align-items: center;
+        border-radius: 100vmax;
+        display: flex;
+        height: 200px;
+        justify-content: center;
+        overflow: hidden;
+        width: 200px;
+    }
+
+    .background {
+        background: var(--bg-gradient-top);
         height: 100vh;
         width: 100vw;
     }
 
-    .index-view-root.minimized {
-        height: var(--menu-bar-height)
+    .background .left {
+        background: var(--bg-gradient-left);
+        height: 100vmax;
+        left: -100vmax;
+        rotate: 15deg;
+        top: 30vh;
+        width: 200vmax;
     }
 
-    .menu-bar {
-        background-color: #1a2028;
-        height: var(--menu-bar-height)
+    .background .right {
+        background: var(--bg-gradient-right);
+        height: 100vmax;
+        position: absolute;
+        right: -100vmax;
+        rotate: -20deg;
+        top: 50vh;
+        width: 200vmax;
     }
 
-    .menu-bar .dots {
+    .icon-box {
         align-items: center;
+        background-color: #ffffff;
+        border-radius: 30vmin;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .2);
         display: flex;
-        height: 100%;
+        height: 30vmin;
+        justify-content: center;
+        width: 30vmin;
     }
 
-    .menu-bar .dots .dot {
-        background-color: #626265;
+    .icon {
+        background: url("~assets/img/jtp_big_icon.svg") no-repeat center;
+        background-size: contain;
+        height: 80%;
+        width: 80%;
+    }
+
+    .icon-me {
+        background: url("~assets/img/me.png") no-repeat center;
+        background-size: contain;
+        border-radius: 200px;
+        height: 80%;
+        width: 80%;
+    }
+
+    .box {
+        background-color: #ffffff;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .2);
-        cursor: pointer;
-        height: 8px;
-        margin-left: 10px;
-        width: 8px;
+        margin-top: 30px;
+        max-height: 100vh;
+        max-width: 500px;
+        min-width: var(--min-width);
+        overflow: hidden;
+        padding: 15px;
     }
 
-    .menu-bar .dots .dot.error:hover {
-        background-color: var(--j-orange-color);
-    }
+    .box-content {
+        opacity: 1;
 
-    .menu-bar .dots .dot.warn:hover {
-        background-color: var(--j-yellow-color);
-    }
+        .title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: center;
+            white-space: pre-wrap;
+        }
 
-    .menu-bar .dots .dot.debug:hover {
-        background-color: var(--j-green-color);
-    }
+        .message {
+            margin-bottom: 12px;
+            text-align: center;
+            white-space: pre-wrap;
+        }
 
-    @media (max-width: 1440px) {
-        .index-view-root {
-            border-radius: 0;
-            width: 100vw;
+        .buttons {
+            align-items: center;
+            display: flex;
+            font-size: 2em;
+            justify-content: space-around;
         }
     }
 
-    .buttons {
-        display: flex;
-        margin-top: 30px;
-        justify-content: center;
-        align-items: flex-start;
+    .lang {
+        font-size: 0.8em;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        img {
+            max-height: 1.2em;
+            max-width: 2em;
+        }
     }
 
-    .buttons > * {
-        margin-left: 10px;
+    /*  ==============  */
+    /*  Icon animation  */
+    /*  ==============  */
+    .icon-appear-enter-active {
+        animation: icon-in 1s;
+    }
+
+    @keyframes icon-in {
+        0% {
+            transform: scale(0);
+        }
+        80% {
+            transform: scale(1);
+        }
+        90% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /*  ====================  */
+    /*  Background animation  */
+    /*  ====================  */
+    .background-change-enter-active {
+        transition: all 1.5s ease;
+    }
+
+    .background-change-enter {
+        height: 20px;
+        width: 20px;
+    }
+
+    .background-change-enter-to {
+        height: 200vmax;
+        width: 200vmax;
+    }
+
+    /*  =============  */
+    /*  Box animation  */
+    /*  =============  */
+    .box-appear-enter-active {
+        animation: box-in 2s ease;
+
+        & > .box-content {
+            transition: opacity 1s ease 1.5s;
+        }
+    }
+
+    .box-appear-enter .box-content {
+        opacity: 0;
+    }
+
+    .box-appear-enter-to .box-content {
+        opacity: 1;
+    }
+
+    @keyframes box-in {
+        0% {
+            max-width: 0;
+            max-height: 0;
+            padding: 0;
+            margin-top: 0;
+        }
+        40% {
+            max-height: 0;
+        }
+        50% {
+            max-width: 500px;
+            margin-top: 30px;
+            padding: 10px;
+        }
+        100% {
+            max-height: 50vh;
+        }
+    }
+
+    /*  ============  */
+    /*  My animation  */
+    /*  ============  */
+    .me-animation-enter-active,
+    .me-animation-leave-active {
+        transition: transform 0.2s ease;
+    }
+
+    .me-animation-leave {
+        transform: rotateY(0);
+    }
+
+    .me-animation-leave-to {
+        transform: rotateY(90deg);
+    }
+
+    .me-animation-enter {
+        transform: rotateY(90deg);
+    }
+
+    .me-animation-enter-to {
+        transform: rotateY(0);
     }
 </style>
 
 <i18n>
     {
         "en": {
-            "message": "The code of my personal web page"
+            "title": "Welcome to jtp.es!",
+            "constructionMessage": "My name is Julio Treviño Páez and I'm currently building this web so...\nThis page is under construction!!",
+            "message": "Meanwhile you can discover everything about me in other platforms:"
         },
         "es": {
-            "message": "El código de mi web personal"
+            "title": "¡Bienvenido a jtp.es!",
+            "constructionMessage": "Me llamo Julio Treviño Páez y estoy desarrollando la web así que...\n¡¡Esta pagína está en construcción!!",
+            "message": "Mientras tanto puedes descubrir toda la información acerca de mi en otras plataformas:"
         }
     }
 </i18n>
