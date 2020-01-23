@@ -5,7 +5,7 @@
             <div class="right"></div>
         </div>
         <div class="page-container">
-            <nuxt @theme="changeTheme"/>
+            <nuxt :key="$route.fullPath"/>
         </div>
     </div>
 </template>
@@ -33,18 +33,12 @@
 
         // METHODS ------------------------------------------------------------
 
-        changeTheme(newTheme: string) {
-            console.log(newTheme);
-            this.$store.commit("changeTheme", newTheme);
-        }
-
         // WATCHERS -----------------------------------------------------------
 
         // HOOKS --------------------------------------------------------------
 
         created() {
             this.$nuxt.$on("changeTheme", (newTheme: string) => {
-                console.log(newTheme);
                 this.$store.commit("changeTheme", newTheme);
             });
         }
