@@ -201,12 +201,14 @@
 </script>
 
 <style lang="scss" scoped>
+    $size: 2em;
+
     .button {
         border-radius: 4px;
         cursor: pointer;
         font-weight: bold;
-        min-height: 2.572em;
-        min-width: 2.572em;
+        min-height: $size;
+        min-width: $size;
         outline: none;
         overflow: hidden;
         user-select: none;
@@ -218,9 +220,9 @@
 
         & > .wrapper {
             height: 100%;
-            line-height: calc(2.572em - 8px);
-            min-height: 2.572em;
-            padding: 4px 16px;
+            line-height: $size - ($size * 0.8em / 2.572em);
+            min-height: $size;
+            padding: ($size * 0.4em / 2.572em) ($size * 0.7em / 2.572em);
             text-align: center;
             width: 100%;
         }
@@ -239,7 +241,7 @@
             top: 0;
 
             & > .icon {
-                font-size: 1.5em;
+                font-size: $size * 1.5em / 2.572em;
             }
         }
     }
@@ -276,7 +278,7 @@
         border: 1px solid currentColor;
 
         & > .wrapper {
-            min-height: calc(2.572em - 2px);
+            min-height: calc(#{$size} - 2px);
         }
 
         &:hover, &:focus {
