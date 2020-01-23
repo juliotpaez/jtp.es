@@ -4,8 +4,7 @@
         <div class="message">{{$t(`message.${code}`)}}</div>
         <div class="back">
             <j-button :focus-index="0"
-                      :focusable="true"
-                      :focused.sync="focused"
+                      :focused="true"
                       :text="$t('button')"
                       @click="navigateBack"
                       left-icon="chevron-left"
@@ -17,19 +16,14 @@
 <script lang="ts">
     import { Component, Prop, Vue } from "~/node_modules/vue-property-decorator";
     import JButton from "~/components/ui/JButton.vue";
-
-    interface Error {
-        statusCode: number,
-        message: string
-    }
+    import { NuxtTypes } from "~/types/NuxtTypes";
 
     @Component({
         components: {JButton}
     })
     export default class ErrorView extends Vue {
-        @Prop({}) error?: Error;
+        @Prop({}) error?: NuxtTypes.RouterError;
         blockWidth: string = "auto";
-        focused: boolean = false;
 
         // GETTERS & SETTERS --------------------------------------------------
 
@@ -44,15 +38,12 @@
         // METHODS ------------------------------------------------------------
 
         navigateBack() {
+            if (this.$route.path === "/") {
+                this.$router.go(0);
+                return;
+            }
+
             this.$router.push("/");
-        }
-
-        focusIn() {
-
-        }
-
-        focusOut() {
-
         }
 
         // WATCHERS -----------------------------------------------------------

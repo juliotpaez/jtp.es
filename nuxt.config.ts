@@ -43,11 +43,10 @@ const config: Configuration = {
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: ["~/plugins/fontawesome",
-        {
-            src: "~/plugins/clientDirectives",
-            mode: "client"
-        }],
+    plugins: ["~/plugins/fontawesome", {
+        src: "~/plugins/clientDirectives",
+        mode: "client"
+    }],
 
     /*
      ** Nuxt.js dev-modules
