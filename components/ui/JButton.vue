@@ -13,6 +13,7 @@
             <fa-icon :class="{icon: iconMode}" :icon="leftIconValue" v-if="this.leftIconValue !== ''"/>
             <span v-if="!iconMode">{{text}}</span>
             <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIconValue !== ''"/>
+            <div class="disable-hover"></div>
         </div>
     </div>
 </template>
@@ -44,6 +45,7 @@
         @Prop({default: -1}) readonly focusIndex!: number;
         @PropSync("focused", {default: false}) syncFocused!: boolean;
         @Prop({default: true}) readonly keyboardHandled!: boolean;
+        @Prop({default: false}) disabled!: boolean;
 
         // Accessibility
         @Prop({default: ""}) label!: string;
@@ -125,6 +127,10 @@
                 classes.push("ripple");
             }
 
+            if (this.disabled) {
+                classes.push("disabled");
+            }
+
             return classes;
         }
 
@@ -163,13 +169,15 @@
 
         // METHODS ------------------------------------------------------------
 
-        onClick(ev: any) {
-            this.$emit("click", ev);
+        onClick() {
+            this.onEnter();
             window.document.documentElement.focus();
         }
 
-        onEnter(ev: any) {
-            this.$emit("click", ev);
+        onEnter() {
+            if (!this.disabled) {
+                this.$emit("click");
+            }
         }
 
         @Emit() focusIn() {
@@ -319,5 +327,20 @@
             background-size: 100%;
             transition: background 0s;
         }
+    }
+
+    /* --------------- */
+    /* Disabled effect */
+    /* --------------- */
+    .disable-hover {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .disabled .disable-hover {
+        background-color: rgba(0, 0, 0, 0.2);
     }
 </style>

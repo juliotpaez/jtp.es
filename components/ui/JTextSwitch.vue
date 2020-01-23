@@ -26,6 +26,7 @@
             <div class="right">
                 <span>{{trueText}}</span>
             </div>
+            <div class="disable-hover"></div>
         </div>
     </div>
 </template>
@@ -60,6 +61,7 @@
         @Prop({default: -1}) readonly focusIndex!: number;
         @PropSync("focused", {default: false}) syncFocused!: boolean;
         @Prop({default: true}) readonly keyboardHandled!: boolean;
+        @Prop({default: false}) disabled!: boolean;
 
         // Accessibility
         @Prop({default: ""}) label!: string;
@@ -117,6 +119,10 @@
                 classes.push("tricolor");
             }
 
+            if (this.disabled) {
+                classes.push("disabled");
+            }
+
             return classes;
         }
 
@@ -161,12 +167,14 @@
         // METHODS ------------------------------------------------------------
 
         onClick() {
-            this.$emit("change", !this.checked);
+            this.onEnter();
             window.document.documentElement.focus();
         }
 
         onEnter() {
-            this.$emit("change", !this.checked);
+            if (!this.disabled) {
+                this.$emit("change", !this.checked);
+            }
         }
 
         @Emit() focusIn() {
@@ -314,5 +322,20 @@
     .zoom-in-enter,
     .zoom-in-leave-to {
         transform: scale(0);
+    }
+
+    /* --------------- */
+    /* Disabled effect */
+    /* --------------- */
+    .disable-hover {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .disabled .disable-hover {
+        background-color: rgba(0, 0, 0, 0.2);
     }
 </style>

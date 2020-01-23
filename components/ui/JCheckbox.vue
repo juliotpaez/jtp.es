@@ -14,17 +14,14 @@
             <div class="thumb-box">
                 <transition mode="out-in" name="zoom-in">
                     <div class="on-box" key="on" v-if="checked">
-                        <div class="hover">
-                            <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
-                        </div>
+                        <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
                     </div>
                     <div class="off-box" key="off" v-else>
-                        <div class="hover">
-                            <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
-                        </div>
+                        <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
                     </div>
                 </transition>
             </div>
+            <div class="disable-hover"></div>
         </div>
     </div>
 </template>
@@ -60,6 +57,7 @@
         @Prop({default: -1}) readonly focusIndex!: number;
         @PropSync("focused", {default: false}) syncFocused!: boolean;
         @Prop({default: true}) readonly keyboardHandled!: boolean;
+        @Prop({default: false}) disabled!: boolean;
 
         // Accessibility
         @Prop({default: ""}) label!: string;
@@ -125,6 +123,10 @@
                 classes.push("tricolor");
             }
 
+            if (this.disabled) {
+                classes.push("disabled");
+            }
+
             return classes;
         }
 
@@ -183,12 +185,14 @@
         // METHODS ------------------------------------------------------------
 
         onClick() {
-            this.$emit("change", !this.checked);
+            this.onEnter();
             window.document.documentElement.focus();
         }
 
         onEnter() {
-            this.$emit("change", !this.checked);
+            if (!this.disabled) {
+                this.$emit("change", !this.checked);
+            }
         }
 
         @Emit() focusIn() {
@@ -262,11 +266,14 @@
             }
 
             .on-box {
+                align-items: center;
                 background-color: var(--true-color);
                 border-radius: 4px;
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
                 color: var(--false-color);
+                display: flex;
                 height: calc(#{$size} - 1px);
+                justify-content: center;
                 width: calc(#{$size} - 1px);
 
                 & > * {
@@ -275,20 +282,15 @@
             }
 
             .off-box {
+                align-items: center;
                 background-color: var(--false-color);
                 border-radius: 4px;
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
                 color: var(--true-color);
-                height: $falseSize;
-                width: $falseSize;
-            }
-
-            .hover {
-                align-items: center;
                 display: flex;
-                height: 100%;
+                height: $falseSize;
                 justify-content: center;
-                width: 100%;
+                width: $falseSize;
             }
         }
 
@@ -304,11 +306,11 @@
             .off-box {
                 background-color: transparent !important;
                 box-shadow: none !important;
-                height: $size;
-                width: $size;
+                height: $size !important;
+                width: $size !important;
 
                 & > * {
-                    font-size: $size * 1.5em / 2.572em;
+                    font-size: $size * 1.5em / 2.572em !important;
                 }
             }
         }
@@ -354,5 +356,20 @@
     .zoom-in-enter,
     .zoom-in-leave-to {
         transform: scale(0);
+    }
+
+    /* --------------- */
+    /* Disabled effect */
+    /* --------------- */
+    .disable-hover {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .disabled .disable-hover {
+        background-color: rgba(0, 0, 0, 0.2);
     }
 </style>
