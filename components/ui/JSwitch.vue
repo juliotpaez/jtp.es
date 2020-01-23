@@ -14,12 +14,10 @@
             <div class="thumb-box">
                 <div class="left">
                     <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
-                    <span v-else-if="trueTextValue !== ''">{{trueTextValue}}</span>
                 </div>
                 <div class="thumb"></div>
                 <div class="right">
                     <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
-                    <span v-else-if="falseTextValue !== ''">{{falseTextValue}}</span>
                 </div>
             </div>
         </div>
@@ -40,9 +38,7 @@
 
         // Content
         @Prop({default: ""}) readonly trueIcon!: string;
-        @Prop({default: ""}) readonly trueText!: string;
         @Prop({default: ""}) readonly falseIcon!: string;
-        @Prop({default: ""}) readonly falseText!: string;
 
         // Style
         @Prop({default: false}) readonly rounded!: boolean;
@@ -84,10 +80,6 @@
             }
         }
 
-        get trueTextValue() {
-            return this.trueText.substr(0, 3);
-        }
-
         get falseIconValue() {
             let value = this.falseIcon.trim().split(/\s+/, 2);
 
@@ -104,10 +96,6 @@
                 default:
                     return value;
             }
-        }
-
-        get falseTextValue() {
-            return this.falseText.substr(0, 3);
         }
 
         get themeClasses() {
@@ -311,8 +299,16 @@
         }
 
         &.tricolor {
+            .left {
+                color: var(--accent-color) !important;
+            }
+
             .thumb {
                 background-color: var(--accent-color) !important;
+            }
+
+            .right {
+                color: var(--accent-color) !important;
             }
         }
 
