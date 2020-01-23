@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from "vuex";
 
 export const state = () => ({
-    theme: "white"
+    theme: "dark"
 });
 
 // Type
