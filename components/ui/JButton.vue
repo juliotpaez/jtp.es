@@ -20,7 +20,7 @@
 
 <script lang="ts">
     import "reflect-metadata";
-    import { Component, Emit, Prop, PropSync, Ref, Vue } from "~/node_modules/vue-property-decorator";
+    import { Component, Prop, PropSync, Ref, Vue } from "~/node_modules/vue-property-decorator";
     import ColorUtils from "~/utils/ColorUtils";
 
     @Component
@@ -180,20 +180,22 @@
             }
         }
 
-        @Emit() focusIn() {
+        focusIn() {
             if (!this.focusable) {
                 return;
             }
 
             this.syncFocused = true;
+            this.$emit("focusIn");
         }
 
-        @Emit() focusOut() {
+        focusOut() {
             if (!this.focusable) {
                 return;
             }
 
             this.syncFocused = false;
+            this.$emit("focusOut");
         }
 
         // WATCHERS -----------------------------------------------------------
