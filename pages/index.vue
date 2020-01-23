@@ -179,8 +179,8 @@
         background: var(--bg-gradient-left);
         height: 100vmax;
         left: -100vmax;
-        rotate: 15deg;
         top: 30vh;
+        transform: rotate(15deg);
         width: 200vmax;
     }
 
@@ -189,8 +189,8 @@
         height: 100vmax;
         position: absolute;
         right: -100vmax;
-        rotate: -20deg;
         top: 50vh;
+        transform: rotate(-20deg);
         width: 200vmax;
     }
 
@@ -216,8 +216,8 @@
         background: url("~assets/img/me.png") no-repeat center;
         background-size: contain;
         border-radius: 200px;
-        height: 80%;
-        width: 80%;
+        height: 100%;
+        width: 100%;
     }
 
     .box {

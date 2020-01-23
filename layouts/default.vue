@@ -66,7 +66,7 @@
         background: var(--bg-gradient-left);
         height: 100vmax;
         left: -100vmax;
-        rotate: 15deg;
+        transform: rotate(15deg);
         top: 30vh;
         width: 200vmax;
     }
@@ -76,7 +76,7 @@
         height: 100vmax;
         position: absolute;
         right: -100vmax;
-        rotate: -20deg;
+        transform: rotate(-20deg);
         top: 50vh;
         width: 200vmax;
     }
