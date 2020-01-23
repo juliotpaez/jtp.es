@@ -13,11 +13,15 @@
             <div class="rail"></div>
             <div class="thumb-box">
                 <div class="left">
-                    <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
+                    <slot name="true-icon">
+                        <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
+                    </slot>
                 </div>
                 <div class="thumb"></div>
                 <div class="right">
-                    <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
+                    <slot name="false-icon">
+                        <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
+                    </slot>
                 </div>
             </div>
             <div class="disable-hover"></div>
@@ -234,7 +238,10 @@
                 width: (2 * $size + $minSize);
 
                 .left {
+                    align-items: center;
                     color: var(--true-color);
+                    display: flex;
+                    justify-content: center;
                     width: ($size);
                 }
 
@@ -247,7 +254,10 @@
                 }
 
                 .right {
+                    align-items: center;
                     color: var(--false-color);
+                    display: flex;
+                    justify-content: center;
                     width: ($size);
                 }
             }

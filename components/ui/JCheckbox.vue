@@ -14,10 +14,10 @@
             <div class="thumb-box">
                 <transition mode="out-in" name="zoom-in">
                     <div class="on-box" key="on" v-if="checked">
-                        <fa-icon :icon="trueIconValue" class="icon" v-if="trueIconValue !== ''"/>
+                        <fa-icon :icon="trueIconValue" v-if="trueIconValue !== ''"/>
                     </div>
                     <div class="off-box" key="off" v-else>
-                        <fa-icon :icon="falseIconValue" class="icon" v-if="falseIconValue !== ''"/>
+                        <fa-icon :icon="falseIconValue" v-if="falseIconValue !== ''"/>
                     </div>
                 </transition>
             </div>

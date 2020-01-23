@@ -11,7 +11,7 @@
          ref="textSwitch">
         <div :class="{on:checked, off:!checked}" class="wrapper">
             <div class="left">
-                <span>{{falseText}}</span>
+                <slot name="false-value"><span>{{falseText}}</span></slot>
             </div>
             <div class="middle">
                 <transition mode="out-in" name="zoom-in">
@@ -24,7 +24,7 @@
                 </transition>
             </div>
             <div class="right">
-                <span>{{trueText}}</span>
+                <slot name="true-value"><span>{{trueText}}</span></slot>
             </div>
             <div class="disable-hover"></div>
         </div>

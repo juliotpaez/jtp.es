@@ -10,9 +10,11 @@
          class="button"
          ref="button">
         <div class="wrapper">
-            <fa-icon :class="{icon: iconMode}" :icon="leftIconValue" v-if="this.leftIconValue !== ''"/>
-            <span v-if="!iconMode">{{text}}</span>
-            <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIconValue !== ''"/>
+            <slot>
+                <fa-icon :class="{icon: iconMode}" :icon="leftIconValue" v-if="this.leftIconValue !== ''"/>
+                <span v-if="!iconMode">{{text}}</span>
+                <fa-icon :icon="rightIconValue" v-if="!iconMode && this.rightIconValue !== ''"/>
+            </slot>
             <div class="disable-hover"></div>
         </div>
     </div>
