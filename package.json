@@ -5,10 +5,10 @@
     "author": "Julio Treviño Páez <julio.tpaez@gmail.com>",
     "private": true,
     "scripts": {
-        "dev": "nuxt-ts",
+        "dev": "nuxt-ts --hostname 0.0.0.0",
         "build": "nuxt-ts build",
         "generate": "nuxt-ts generate",
-        "start": "nuxt-ts start",
+        "start": "nuxt-ts start --hostname 0.0.0.0",
         "test": "jest"
     },
     "dependencies": {
