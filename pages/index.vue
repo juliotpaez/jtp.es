@@ -226,10 +226,9 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .2);
         margin-top: 30px;
         max-height: 100vh;
-        max-width: 500px;
-        min-width: var(--min-width);
         overflow: hidden;
         padding: 15px;
+        width: 500px;
     }
 
     .box-content {
@@ -329,7 +328,7 @@
 
     @keyframes box-in {
         0% {
-            max-width: 0;
+            width: 0;
             max-height: 0;
             padding: 0;
             margin-top: 0;
@@ -338,7 +337,7 @@
             max-height: 0;
         }
         50% {
-            max-width: 500px;
+            width: 500px;
             margin-top: 30px;
             padding: 10px;
         }
@@ -377,12 +376,12 @@
         "en": {
             "title": "Welcome to jtp.es!",
             "constructionMessage": "My name is Julio Treviño Páez and I'm currently building this web so...\nThis page is under construction!!",
-            "message": "Meanwhile you can discover everything about me in other platforms:"
+            "message": "Meanwhile you can discover everything about me or my projects in other platforms:"
         },
         "es": {
             "title": "¡Bienvenido a jtp.es!",
             "constructionMessage": "Me llamo Julio Treviño Páez y estoy desarrollando la web así que...\n¡¡Esta pagína está en construcción!!",
-            "message": "Mientras tanto puedes descubrir toda la información acerca de mi en otras plataformas:"
+            "message": "Mientras tanto puedes descubrir toda la información acerca de mi y mis proyectos en otras plataformas:"
         }
     }
 </i18n>
